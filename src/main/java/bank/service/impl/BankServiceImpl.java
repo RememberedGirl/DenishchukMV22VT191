@@ -1,9 +1,5 @@
 package bank.service.impl;
 
-import bank.entity.exceptions.AtmBankException;
-import bank.entity.exceptions.EmployeeBankException;
-import bank.entity.exceptions.OfficeBankException;
-import bank.entity.exceptions.UserBankException;
 import bank.entity.finance.Bank;
 import bank.entity.finance.BankAtm;
 import bank.entity.finance.BankOffice;
@@ -67,13 +63,14 @@ public class BankServiceImpl implements BankService {
      * @return
      */
     @Override
-    public void addBankOffice(BankOfficeService bankOffice) throws OfficeBankException {
+    public Boolean addBankOffice(BankOfficeService bankOffice) {
         if (!Objects.equals(bankOffice.getBankOffice().getBank(), this.bank))
-            throw new OfficeBankException();
+            return false;
         ArrayList<BankOffice> offices = this.bank.getOffices();
         offices.add(bankOffice.getBankOffice());
         this.bank.setOffices(offices);
         bankOffice.getBankOffice().setBank(this.bank);
+        return true;
     }
 
     /**
@@ -82,13 +79,14 @@ public class BankServiceImpl implements BankService {
      * @return
      */
     @Override
-    public void delBankOffice(BankOfficeService bankOffice) throws OfficeBankException{
+    public Boolean delBankOffice(BankOfficeService bankOffice) {
         if (!Objects.equals(bankOffice.getBankOffice().getBank(), this.bank))
-            throw new OfficeBankException();
+            return false;
         ArrayList<BankOffice> offices = this.bank.getOffices();
         offices.remove(bankOffice.getBankOffice());
         this.bank.setOffices(offices);
         bankOffice.getBankOffice().setBank(this.bank);
+        return true;
     }
 
     /**
@@ -97,13 +95,14 @@ public class BankServiceImpl implements BankService {
      * @return
      */
     @Override
-    public void addBankATM(AtmService bankATM) throws AtmBankException {
+    public Boolean addBankATM(AtmService bankATM) {
         if (!Objects.equals(bankATM.getBankATM().getBank(), this.bank))
-            throw new AtmBankException();
+            return false;
         ArrayList<BankAtm> atms = this.bank.getAtms();
         atms.add(bankATM.getBankATM());
         this.bank.setAtms(atms);
         bankATM.getBankATM().setBank(this.bank);
+        return true;
     }
 
     /**
@@ -112,13 +111,14 @@ public class BankServiceImpl implements BankService {
      * @return
      */
     @Override
-    public void delBankATM(AtmService bankATM) throws AtmBankException{
+    public Boolean delBankATM(AtmService bankATM) {
         if (!Objects.equals(bankATM.getBankATM().getBank(), this.bank))
-            throw new AtmBankException();
+            return false;
         ArrayList<BankAtm> atms = this.bank.getAtms();
         atms.remove(bankATM.getBankATM());
         this.bank.setAtms(atms);
         bankATM.getBankATM().setBank(this.bank);
+        return true;
     }
 
     /**
@@ -127,13 +127,14 @@ public class BankServiceImpl implements BankService {
      * @return
      */
     @Override
-    public void addEmployee(EmployeeService employee) throws EmployeeBankException {
+    public Boolean addEmployee(EmployeeService employee) {
         if (!Objects.equals(employee.getEmployee().getBank(), this.bank))
-            throw new EmployeeBankException();
+            return false;
         ArrayList<Employee> bankEmployees = this.bank.getEmployees();
         bankEmployees.add(employee.getEmployee());
         this.bank.setEmployees(bankEmployees);
         employee.getEmployee().setBank(this.bank);
+        return true;
     }
 
     /**
@@ -142,13 +143,14 @@ public class BankServiceImpl implements BankService {
      * @return
      */
     @Override
-    public void delEmployee(EmployeeService employee) throws EmployeeBankException{
+    public Boolean delEmployee(EmployeeService employee) {
         if (!Objects.equals(employee.getEmployee().getBank(), this.bank))
-            throw new EmployeeBankException();
+            return false;
         ArrayList<Employee> bankEmployees = this.bank.getEmployees();
         bankEmployees.remove(employee.getEmployee());
         this.bank.setEmployees(bankEmployees);
         employee.getEmployee().setBank(this.bank);
+        return true;
     }
 
     /**
@@ -157,14 +159,15 @@ public class BankServiceImpl implements BankService {
      * @return
      */
     @Override
-    public void addUser(UserService user) throws UserBankException {
+    public Boolean addUser(UserService user) {
         if (this.bank.getClients().contains(user.getUser()))
-            throw new UserBankException();
+            return false;
         ArrayList<User> clients = this.bank.getClients();
         clients.add(user.getUser());
         this.bank.setCountClients(this.bank.getCountClients() + 1);
         this.bank.setClients(clients);
         user.addBank(this.bank);
+        return true;
     }
 
     /**
@@ -173,14 +176,15 @@ public class BankServiceImpl implements BankService {
      * @return
      */
     @Override
-    public void delUser(UserService user) throws UserBankException{
+    public Boolean delUser(UserService user) {
         if (!this.bank.getClients().contains(user.getUser()))
-            throw new UserBankException();
+            return false;
         ArrayList<User> clients = this.bank.getClients();
         clients.remove(user.getUser());
         this.bank.setCountClients(this.bank.getCountClients() + 1);
         this.bank.setClients(clients);
         user.delBank(this.bank);
+        return true;
     }
 
 
@@ -238,7 +242,7 @@ public class BankServiceImpl implements BankService {
      * @return
      */
     @Override
-    public String toString() {
+    public String getInfo() {
         StringBuilder returnStr = new StringBuilder(this.bank.toString());
         returnStr.append("\n\nОфисы банка:");
         for (int countOffice = 0; countOffice < this.bank.getOffices().size(); countOffice++) {

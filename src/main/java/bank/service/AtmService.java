@@ -35,7 +35,7 @@ public interface AtmService {
     void update(BankAtm bankAtm);
 
     /**
-     * Delete BankATM
+     * Delete <T>BankATM</T>
      */
     void delete();
 
@@ -65,8 +65,6 @@ public interface AtmService {
      */
     Boolean isPossibleToSubstractMoney(double sumMoney);
 
-    Boolean addMoney(Double sumMoney);
-
     /**
      * Метод IssuanceMoneyOn - выдача денег со счета разрешена/возможна
      */
@@ -86,5 +84,4 @@ public interface AtmService {
      * Метод DepositMoneyOn - внос денег на счет запрещена/невозможна
      */
     void DepositMoneyOff();
-
 }

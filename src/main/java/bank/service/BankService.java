@@ -1,9 +1,5 @@
 package bank.service;
 
-import bank.entity.exceptions.AtmBankException;
-import bank.entity.exceptions.EmployeeBankException;
-import bank.entity.exceptions.OfficeBankException;
-import bank.entity.exceptions.UserBankException;
 import bank.entity.finance.Bank;
 
 /**
@@ -56,60 +52,60 @@ public interface BankService {
      * @param bankOffice
      * @return
      */
-    void addBankOffice(BankOfficeService bankOffice) throws OfficeBankException;
+    Boolean addBankOffice(BankOfficeService bankOffice);
 
     /**
      * Метод delBankOffice - удаляет из банка офис
      * @param bankOffice
      * @return
      */
-    void delBankOffice(BankOfficeService bankOffice) throws OfficeBankException;
+    Boolean delBankOffice(BankOfficeService bankOffice);
 
     /**
      * Метод addBankATM - добавляет в банк банкомат
      * @param bankAtm
      * @return
      */
-    void addBankATM(AtmService bankAtm) throws AtmBankException;
+    Boolean addBankATM(AtmService bankAtm);
 
     /**
      * Метод delBankATM - удаляет из банка банкомат
      * @param bankAtm
      * @return
      */
-    void delBankATM(AtmService bankAtm) throws AtmBankException;
+    Boolean delBankATM(AtmService bankAtm);
 
     /**
      * Метод addEmployee - добавляет в банк сотрудника
      * @param employee
      * @return
      */
-    void addEmployee(EmployeeService employee) throws EmployeeBankException;
+    Boolean addEmployee(EmployeeService employee);
 
     /**
      * Метод delEmployee - удаляет из банка сотрудника
      * @param employee
      * @return
      */
-    void delEmployee(EmployeeService employee) throws EmployeeBankException;
+    Boolean delEmployee(EmployeeService employee);
 
     /**
      * Метод addUser - добавляет пользователя банка
      * @param user
      * @return
      */
-    void addUser(UserService user) throws UserBankException;
+    Boolean addUser(UserService user);
 
     /**
      * Метод delUser - удаляет пользователя банка
      * @param user
      * @return
      */
-    void delUser(UserService user) throws UserBankException;
+    Boolean delUser(UserService user);
 
     /**
      * Метод getInfo - выводит данные в понятном и читаемом виде
      * @return
      */
-    String toString();
+    String getInfo();
 }

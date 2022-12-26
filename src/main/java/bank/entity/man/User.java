@@ -6,6 +6,7 @@ import bank.entity.finance.PaymentAccount;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.SplittableRandom;
@@ -86,6 +87,7 @@ public class User extends Human {
     @Override
     public String toString() {
         final String str = "ФИО: " + super.getFullName() + "\nДата рождения: " + super.getBirthDay();
-        return str + String.format("\nРабота: %s. \nЗарплата: %s. \nКредитный рейтинг: %s.", work, monthSalary, creditRating);
+        return str + String.format("\nРабота: %s. \nЗарплата: %s₽. \nКредитный рейтинг: %s.", work,
+                new DecimalFormat("#0.00").format(monthSalary), creditRating);
     }
 }

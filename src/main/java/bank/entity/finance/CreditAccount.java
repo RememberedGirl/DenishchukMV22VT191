@@ -5,6 +5,7 @@ import bank.entity.man.User;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 @Setter
 @Getter
@@ -80,11 +81,33 @@ public class CreditAccount extends BankAccount {
 
     @Override
     public String toString() {
-        final String str = "Имя банка: " + super.getBank().getName() + "\nИмя пользователя: " + super.getUser().getFullName();
-        return str + String.format("\nКоличество месяцев: %s. \nДата взятия кредита: %s. \nПредполагаемая дата погашения кредита: %s." +
-                        "\nСумма кредита: %s. \nПроцентная ставка: %s. \nЕжемесячный платёж: %s. \nСотрудник, выдавший кредит: %s." +
-                                "\nId платёжного счёта: %s.", countMonth, startDate, endDate, amount,
-                        interestRate, monthlyAmount, employee.getFullName(), paymentAccount.getId());
+        final String str = "\n1-\t\tИмя банка:\t\t" + super.getBank().getName()
+                + "\n2-\t\tИмя пользователя:\t\t" + super.getUser().getFullName();
+        return str + String.format("\n3-\t\tКоличество месяцев:\t\t%s." +
+                        "\n4-\t\tДата взятия кредита:\t\t%s." +
+                        "\n5-\t\tПредполагаемая дата погашения кредита:\t\t%s." +
+                        "\n6-\t\tСумма кредита:\t\t%s₽." +
+                        "\n7-\t\tПроцентная ставка:\t\t%s%%." +
+                        "\n8-\t\tЕжемесячный платёж:\t\t%s₽." +
+                        "\n9-\t\tСотрудник, выдавший кредит:\t\t%s." +
+                        "\n10-\t\tId платёжного счёта:\t\t%s.\n"
+                , countMonth, startDate, endDate, new DecimalFormat("#0.00").format(amount),
+                        interestRate, new DecimalFormat("#0.00").format(monthlyAmount), employee.getFullName(), paymentAccount.getId());
 
     }
+
+    public void downloadToJSON(CreditAccountJSON jsonCreditAccount) {
+        this.setId(jsonCreditAccount.getId());
+        this.getBank().setId(jsonCreditAccount.getBankID());
+        this.getUser().setId(jsonCreditAccount.getUserID());
+        this.getPaymentAccount().setId(jsonCreditAccount.getPaymentAccountID());
+        this.getEmployee().setId(jsonCreditAccount.getEmployeeID());
+        this.setStartDate(LocalDate.parse(jsonCreditAccount.getStartDate()));
+        this.setEndDate(LocalDate.parse(jsonCreditAccount.getEndDate()));
+        this.setCountMonth(jsonCreditAccount.getCountMonth());
+        this.setAmount(jsonCreditAccount.getAmount());
+        this.setMonthlyAmount(jsonCreditAccount.getMonthlyAmount());
+        this.setInterestRate(jsonCreditAccount.getInterestRate());
+    }
+
 }

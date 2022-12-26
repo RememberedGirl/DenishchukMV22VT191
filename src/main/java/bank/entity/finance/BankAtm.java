@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.text.DecimalFormat;
+
 /**
  * BankAtm - объект банкомат
  */
@@ -123,8 +125,8 @@ public class BankAtm {
         else
             bankATMInformation += "\nНельзя внести деньги";
 
-        bankATMInformation += String.format("\nДенежная сумма: %s. \nСтоимость обслуживания: %s.",
-                money, maintenanceCost);
+        bankATMInformation += String.format("\nДенежная сумма: %s₽. \nСтоимость обслуживания: %s₽.",
+                new DecimalFormat("#0.00").format(money), new DecimalFormat("#0.00").format(maintenanceCost));
         return bankATMInformation;
     }
 }

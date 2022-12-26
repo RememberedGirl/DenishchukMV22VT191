@@ -1,9 +1,10 @@
 package bank.entity.finance;
 
 import bank.entity.man.User;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.text.DecimalFormat;
 
 @Setter
 @Getter
@@ -31,7 +32,16 @@ public class PaymentAccount extends BankAccount {
 
     @Override
     public String toString() {
-        final String str = "Имя банка: " + super.getBank().getName() + "\nФИО пользователя: " + super.getUser().getFullName();
-        return str + String.format("\nСумма денег: %s. ", amount);
+        final String str = "\n1-\t\tИмя банка:\t\t" + super.getBank().getName() +
+                "\n2-\t\tФИО пользователя:\t\t" + super.getUser().getFullName();
+        return str + String.format("\n3-\t\tСумма денег:\t\t%s₽.\n", new DecimalFormat("#0.00").format(amount));
     }
+
+    public void downloadFromJSON(PaymentAccountJSON jsonPaymentAccount) {
+        this.setId(jsonPaymentAccount.getId());
+        this.getBank().setId(jsonPaymentAccount.getBankID());
+        this.getUser().setId(jsonPaymentAccount.getUserID());
+        this.setAmount(jsonPaymentAccount.getAmount());
+    }
+
 }

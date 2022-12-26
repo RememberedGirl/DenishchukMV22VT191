@@ -10,5 +10,8 @@
         <module name="lab2" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="DenishchukMV22VT191" target="19" />
+    </bytecodeTargetLevel>
   </component>
 </project>

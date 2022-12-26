@@ -7,6 +7,7 @@ import bank.entity.finance.BankOffice;
 import bank.entity.man.Employee;
 import bank.entity.man.User;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 /**
@@ -41,6 +42,21 @@ public interface UserService {
      * @return
      */
     User getUser();
+
+    /**
+     * Метод downloadToFile - позволяет загрузить данные в тестовый файл
+     * @param fileName
+     * @param bank
+     * @throws IOException
+     */
+    void downloadToFile(String fileName, BankService bank) throws IOException;
+
+    /**
+     * Метод downloadFromFile - позволяет выгрузить данные из текстового файла
+     * @param fileName
+     * @throws IOException
+     */
+    void downloadFromFile(String fileName) throws IOException;
 
     /**
      * Метод changeWork - позволяет изменить данные о рабочей должности пользователя

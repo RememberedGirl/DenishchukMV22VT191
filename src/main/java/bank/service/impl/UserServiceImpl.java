@@ -11,6 +11,10 @@ import bank.service.CreditAccountService;
 import bank.service.PaymentAccountService;
 import bank.service.UserService;
 
+import java.io.*;
+import java.lang.reflect.Type;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -21,6 +25,9 @@ import java.util.Random;
  */
 public class UserServiceImpl implements UserService {
     private User user = null;
+    Gson gson = new Gson();
+    Type paymentAccountArray = new TypeToken<ArrayList<PaymentAccountJSON>>(){}.getType();
+    Type creditAccountArray = new TypeToken<ArrayList<CreditAccountJSON>>(){}.getType();
 
     /**
      * Создание экземпляра пользователя
@@ -170,6 +177,97 @@ public class UserServiceImpl implements UserService {
             }
         }
         user.setCreditRating(creditRating);
+    }
+
+    /**
+     * Загрузка/запись данных в текстовый документ
+     * @param fileName
+     * @param bank
+     * @throws IOException
+     */
+    @Override
+    public void downloadToFile(String fileName, BankService bank) throws IOException {
+        String paymentAccountString = gson.toJson(this.makePaymentAccountJSON(bank.getBank().getId()));
+        String creditAccountString = gson.toJson(this.makeCreditAccountJSON(bank.getBank().getId()));
+        File file = new File(fileName);
+        FileWriter writer = new FileWriter(file);
+        writer.write("Платёжные счета:\n" + paymentAccountString + "\n\nКредитные счета:\n" + creditAccountString);
+        writer.close();
+    }
+
+    /**
+     * Выгрузка/чтение данных из файлового документа
+     * @param fileName
+     * @throws IOException
+     */
+    @Override
+    public void downloadFromFile(String fileName) throws IOException {
+        File file = new File(fileName);
+        FileReader fr = new FileReader(file);
+        BufferedReader reader = new BufferedReader(fr);
+        String line = reader.readLine();
+        boolean first = true;
+        while (line != null) {
+            if (!line.isEmpty()) {
+                if (line.charAt(0) == '[') {
+                    if (first) {
+                        first = false;
+                        this.makePaymentAccountFromJSON(gson.fromJson(line, paymentAccountArray));
+                    } else {
+                        this.makeCreditAccountFromJSON(gson.fromJson(line, creditAccountArray));
+                    }
+                }
+            }
+            line = reader.readLine();
+        }
+    }
+
+    private ArrayList<PaymentAccountJSON> makePaymentAccountJSON(Integer bankID) {
+        ArrayList<PaymentAccountJSON> jsonPay = new ArrayList<>();
+        for (PaymentAccount paymentAccount : user.getPaymentAccounts()) {
+            if (Objects.equals(paymentAccount.getBank().getId(), bankID)) {
+                jsonPay.add(new PaymentAccountJSON(paymentAccount));
+            }
+        }
+        return jsonPay;
+    }
+
+    private void makePaymentAccountFromJSON(ArrayList<PaymentAccountJSON> jsonPayAcc) {
+        ArrayList<PaymentAccount> payAcc = this.user.getPaymentAccounts();
+        if (!jsonPayAcc.isEmpty()) {
+            for (int i = 0; i < payAcc.size(); i++) {
+                for (int j = 0; j < payAcc.size(); j++) {
+                    if (Objects.equals(payAcc.get(i).getId(), jsonPayAcc.get(j).getId())) {
+                        payAcc.get(i).downloadFromJSON(jsonPayAcc.get(j));
+                    }
+                }
+            }
+            this.user.setPaymentAccounts(payAcc);
+        }
+    }
+
+    private ArrayList<CreditAccountJSON> makeCreditAccountJSON(Integer bankID) {
+        ArrayList<CreditAccountJSON> jsonCredit = new ArrayList<>();
+        for (CreditAccount creditAccount : user.getCreditAccounts()) {
+            if (Objects.equals(creditAccount.getBank().getId(), bankID)) {
+                jsonCredit.add(new CreditAccountJSON(creditAccount));
+            }
+        }
+        return jsonCredit;
+    }
+
+    private void makeCreditAccountFromJSON(ArrayList<CreditAccountJSON> jsonCreditAcc) {
+        ArrayList<CreditAccount> creditAccounts = this.user.getCreditAccounts();
+        if (!jsonCreditAcc.isEmpty()) {
+            for (int i = 0; i < creditAccounts.size(); i++) {
+                for (int j = 0; j < creditAccounts.size(); j++) {
+                    if (Objects.equals(creditAccounts.get(i).getId(), jsonCreditAcc.get(j).getId())) {
+                        creditAccounts.get(i).downloadToJSON(jsonCreditAcc.get(j));
+                    }
+                }
+            }
+            this.user.setCreditAccounts(creditAccounts);
+        }
     }
 
     /**

@@ -5,6 +5,7 @@ import bank.entity.finance.BankOffice;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 
 // id сотрудника, ФИО, дата рождения, должность, банк, работает в банке/дистанционно, банквоский офис,
@@ -89,7 +90,7 @@ public class Employee extends Human {
         else
             str += "\nНе может выдавать кредиты.";
 
-        str += String.format("\nИмя офиса: %s. \nЗарплата: %s.", bankOffice.getName(), salary);
+        str += String.format("\nИмя офиса: %s. \nЗарплата: %s₽.", bankOffice.getName(), new DecimalFormat("#0.00").format(salary));
         return str;
     }
 }

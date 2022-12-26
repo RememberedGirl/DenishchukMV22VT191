@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 @Setter
@@ -158,7 +159,8 @@ public class BankOffice {
             str += "\nМожно внести деньги";
         else
             str += "\nНельзя внести деньги";
-        str += String.format("\nДенежная сумма: %s. \nАрендная плата: %s.", money, rentCost);
+        str += String.format("\nДенежная сумма: %s₽. \nАрендная плата: %s₽.", new DecimalFormat("#0.00").format(money),
+                new DecimalFormat("#0.00").format(rentCost));
 
         return str;
     }

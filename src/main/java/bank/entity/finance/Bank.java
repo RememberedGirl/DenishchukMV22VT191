@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
@@ -106,8 +107,8 @@ public class Bank {
     @Override
     public String toString() {
         return String.format("Имя банка: %s. \nКоличество офисов: %s. \nКоличество банкоматов: %s. " +
-                "\nКоличество сотрудников: %s. \nКоличество клиентов: %s. \nРейтинг: %s. \nКоличество денег: %s. " +
-                "\nПроцентная ставка: %s.", name, countOffice, countATM, countEmployees, countClients, rating, money,
-                interestRate);
+                "\nКоличество сотрудников: %s. \nКоличество клиентов: %s. \nРейтинг: %s. \nКоличество денег: %s₽. " +
+                "\nПроцентная ставка: %.2f%%.", name, countOffice, countATM, countEmployees, countClients, rating,
+                new DecimalFormat("#0.00").format(money), interestRate);
     }
 }

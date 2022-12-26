@@ -1,8 +1,8 @@
 package bank.service;
 
 import bank.entity.finance.Bank;
-import bank.entity.finance.CreditAccount;
-import bank.entity.finance.PaymentAccount;
+import file_gson.CreditAccount;
+import file_gson.PaymentAccount;
 import bank.entity.man.Employee;
 import bank.entity.man.User;
 

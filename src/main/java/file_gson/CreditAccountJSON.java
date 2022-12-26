@@ -1,4 +1,4 @@
-package bank.entity.finance;
+package file_gson;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,15 +1,14 @@
 package bank.entity.man;
 
 import bank.entity.finance.Bank;
-import bank.entity.finance.CreditAccount;
-import bank.entity.finance.PaymentAccount;
+import file_gson.CreditAccount;
+import file_gson.PaymentAccount;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.SplittableRandom;
 
 @Getter
 @Setter

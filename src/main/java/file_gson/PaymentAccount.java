@@ -1,5 +1,7 @@
-package bank.entity.finance;
+package file_gson;
 
+import bank.entity.finance.Bank;
+import bank.entity.finance.BankAccount;
 import bank.entity.man.User;
 import lombok.Getter;
 import lombok.Setter;

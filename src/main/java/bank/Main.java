@@ -14,6 +14,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class Main {
     static void Denishchuk_lab1() {
         //Bank

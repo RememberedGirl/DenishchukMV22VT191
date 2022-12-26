@@ -15,6 +15,11 @@ import java.io.*;
 import java.lang.reflect.Type;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import file_gson.CreditAccount;
+import file_gson.CreditAccountJSON;
+import file_gson.PaymentAccount;
+import file_gson.PaymentAccountJSON;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;

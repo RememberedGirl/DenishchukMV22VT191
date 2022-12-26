@@ -1,7 +1,5 @@
 package bank.entity.exceptions;
 
-import bank.entity.finance.PaymentAccount;
-
 /**
  * Ошибка принадлежности платежного счета
  */
